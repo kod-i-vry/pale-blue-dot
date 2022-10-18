@@ -1,5 +1,6 @@
 import { Column, CreateDateColumn, UpdateDateColumn, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { TimeTable } from './timetable';
+import { TimeTable, Like, Review } from './index';
+
 
 @Entity() 
 export class Tutor {
@@ -21,7 +22,7 @@ export class Tutor {
   @Column({ type: 'tinyint', comment: 'tutor 여부'})
   isTutor: boolean;
 
-  @Column({ type: 'varchar', comment: '유저 프로필사진', length: 255 })
+  @Column({ type: 'varchar', comment: 'profile pic', length: 255 })
   userProfile: string;
 
   @Column({ type: 'varchar', comment: 'tag', length: 255 })
@@ -57,6 +58,12 @@ export class Tutor {
   @UpdateDateColumn({ type: 'timestamp', comment: 'updatedAt'})
   updatedAt: Date;
 
-  // @OneToMany(() => TimeTable, (timetable) => timetable.tutor)
-  // public timeTables: TimeTable[];
+  @OneToMany(() => TimeTable, (timetable) => timetable.tutor)
+  public timeTables: TimeTable[];
+
+  @OneToMany(() => Like, (like) => like.tutor)
+  public likes: Like[];
+
+  @OneToMany(() => Review, (review) => review.tutor)
+  public reviews: Review[];
 }

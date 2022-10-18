@@ -2,7 +2,7 @@ import 'dotenv/config';
 import env from 'env-var';
 
 import { DataSource } from 'typeorm';
-import { Tutee, Tutor, TimeTable } from '../entity';
+import { Tutee, Tutor, TimeTable, Like, Review } from '../entity';
 
 const DB_PORT = env.get('DB_PORT').required().asPortNumber();
 const DB_NAME = env.get('DB_NAME').required().asString();
@@ -19,7 +19,7 @@ export const AppDataSource = new DataSource({
   database: DB_NAME,
   synchronize: true,
   logging: true,
-  entities: [Tutee, Tutor, TimeTable]
+  entities: [Tutee, Tutor, TimeTable, Like, Review]
 });
 
 AppDataSource.initialize().then(async () => {

@@ -19,9 +19,8 @@ export class TimeTable {
   @Column({ type: 'tinyint', comment: 'tutee notification' })
   tuteeNoti: number;
 
-  // @ManyToOne(() => Tutor, (tutor) => tutor.timeTables)
-  // @JoinColumn({ name: 'tutorName'})
-  // public tutor_username: Tutor;
+  @ManyToOne(() => Tutor, (tutor) => tutor.timeTables)
+  public tutor: Tutor;
 
   @ManyToOne(() => Tutee, (tutee) => tutee.timeTables)
   public tutee: Tutee;

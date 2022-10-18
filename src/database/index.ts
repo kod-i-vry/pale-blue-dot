@@ -1,5 +1,5 @@
 import env from 'env-var';
-import { Tutee, Tutor, TimeTable } from '../entity';
+import { Tutee, Tutor, TimeTable, Like, Review } from '../entity';
 import { DataSource } from 'typeorm';
 
 const DB_PORT = env.get('DB_PORT').required().asInt();
@@ -17,5 +17,5 @@ export const AppDataSource = new DataSource({
   database: DB_NAME,
   synchronize: false,
   logging: true,
-  entities: [Tutee, Tutor, TimeTable]
+  entities: [Tutee, Tutor, TimeTable, Like, Review]
 });
