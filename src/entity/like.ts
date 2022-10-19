@@ -10,13 +10,12 @@ export class Like {
   @Column({ type: 'int', comment: 'likeId' })
   likeId: number;
 
-  @CreateDateColumn({ type: 'timestamp', comment: 'createdAt'})
+  @CreateDateColumn({ type: 'timestamp', comment: 'createdAt' })
   createdAt: Date;
 
-  @UpdateDateColumn({ type: 'timestamp', comment: 'updatedAt'})
+  @UpdateDateColumn({ type: 'timestamp', comment: 'updatedAt' })
   updatedAt: Date;
   
-
   @ManyToOne(() => Tutor, (tutor) => tutor.likes)
   public tutor: Tutor;
 

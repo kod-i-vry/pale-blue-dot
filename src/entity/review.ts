@@ -13,10 +13,10 @@ export class Review {
   @Column({ type: 'varchar', comment: 'rate' })
   rate: string;
 
-  @CreateDateColumn({ type: 'timestamp', comment: 'createdAt'})
+  @CreateDateColumn({ type: 'timestamp', comment: 'createdAt' })
   createdAt: Date;
 
-  @UpdateDateColumn({ type: 'timestamp', comment: 'updatedAt'})
+  @UpdateDateColumn({ type: 'timestamp', comment: 'updatedAt' })
   updatedAt: Date;
 
   @ManyToOne(() => Tutor, (tutor) => tutor.reviews)
