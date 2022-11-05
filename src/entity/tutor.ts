@@ -1,62 +1,54 @@
-import { Column, CreateDateColumn, UpdateDateColumn, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { TimeTable } from './timetable';
+import { 
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,  
+} from 'typeorm';
+import { BlueDotBaseEntity } from './blue-dot-base-entity';
 
-@Entity() 
-export class Tutor {
+@Entity()
+export class Tutor extends BlueDotBaseEntity {
   @PrimaryGeneratedColumn()
-  public id: number;
+  id!: number;
 
-  @Column({ type: 'bigint', comment: 'user id', unique: true })
-  userId: number;
+  @Column({ type: 'varchar2', comment: 'userName', length: 20})
+  userName!: string;
 
-  @Column({ type: 'varchar', comment: 'user name', length: 20 })
-  userName: string;
+  @Column({ type: 'varchar2', comment: 'userEmail', })
+  userEmail!: string;
 
-  @Column({ type: 'varchar', comment: 'user email', length: 50 })
-  userEmail: string;
+  @Column({ type: 'varchar2', comment: 'pwd'})
+  pwd!: string;
 
-  @Column({ type: 'varchar', comment: 'password', length: 20 })
-  pwd: string;
+  @Column({ type: 'bool', comment: 'is Tutor', length: 10})
+  isTutor!: boolean;
 
-  @Column({ type: 'tinyint', comment: 'tutor 여부'})
-  isTutor: boolean;
+  @Column({ type: 'varchar2', comment: 'user profile url'})
+  userProfile!: string;
 
-  @Column({ type: 'varchar', comment: '유저 프로필사진', length: 255 })
-  userProfile: string;
+  @Column({ type: 'varchar2', comment: 'tag'})
+  tag!: string;
 
-  @Column({ type: 'varchar', comment: 'tag', length: 255 })
-  tag: string;
+  @Column({ type: 'text', comment: 'contents'})
+  contents!: string;
 
-  @Column({ type: 'datetime', comment: 'contents'})
-  contents: string;
+  @Column({ type: 'varchar2', comment: 'class startTime', length: 45})
+  classStartTime!: string;
 
-  @Column({ type: 'varchar', comment: 'startTime'})
-  startTime: string;
+  @Column({ type: 'varchar2', comment: 'class endTime', length: 45})
+  classEndTime!: string;
 
-  @Column({ type: 'varchar', comment: 'endTime'})
-  endTime: string;
+  @Column({ type: 'varchar2', comment: '1 line comment', length: 255})
+  oneLineComment: string;
 
-  @Column({ type: 'varchar', comment: 'comment'})
-  comment: string;
+  @Column({ type: 'int', comment: 'the number of like'})
+  numOfLike!: number;
 
-  @Column({ type: 'int', comment: 'like'})
-  like: number;
+  @Column({ type: 'varchar2', comment: 'favorite languages', length: 255})
+  favoriteLanguages!: string;
 
-  @Column({ type: 'varchar', comment: 'language1'})
-  language1: string;
+  @OneToMany
 
-  @Column({ type: 'varchar', comment: 'language2'})
-  language2: string;
 
-  @Column({ type: 'varchar', comment: 'language3'})
-  language3: string; 
 
-  @CreateDateColumn({ type: 'timestamp', comment: 'createdAt'})
-  createdAt: Date;
-
-  @UpdateDateColumn({ type: 'timestamp', comment: 'updatedAt'})
-  updatedAt: Date;
-
-  // @OneToMany(() => TimeTable, (timetable) => timetable.tutor)
-  // public timeTables: TimeTable[];
 }

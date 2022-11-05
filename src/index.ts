@@ -1,17 +1,15 @@
 import 'dotenv/config';
 import express from 'express';
-import { AppDataSource } from './database/index';
+import cors from 'cors';
+import { PORT } from './common/environment';
 
 const app = express();
 
+app.use(cors());
+app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
 
-app.listen(3000, () => {
-  return console.log('Express is listening at 3000 port');
-});
 
-AppDataSource.initialize().then(async () => {
-  console.log('db connect success');
-  }).catch(error => console.log(error))
-  
-
+app.listen(PORT, () => {
+  console.log(`port ${PORT} server opened`);
+})
