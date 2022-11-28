@@ -13,7 +13,7 @@ const router = Router();
 router.post('/signup', wrapAsync(async (req, res, next) => {
   const {userEmail, userName, pwd, isTutor, tag, language1, language2, language3, comment, contents, startTime, endTime} = req.body;
 
-  const existUser = await AppDataSource.getRepository(Tutor && Tutee).findOne({
+  const existUser = await AppDataSource.getRepository(Tutee).findOne({
     where: {
       userEmail: userEmail
     }
@@ -26,12 +26,12 @@ router.post('/signup', wrapAsync(async (req, res, next) => {
   const pwdValidation = /^(?=.*[A-Za-z])(?=.*[0-9])[a-zA-Z0-9!-_]{8,20}$/;
 
   if(!pwdValidation.test(pwd)) {
-    ;throw new ValidationError({code: 'VALIDATION_FAILED', message: 'invalid password'});
+    throw new ValidationError({code: 'VALIDATION_FAILED', message: 'invalid password'});
   }
 
   const hashedPassword = await createHash( pwd, SALT_ROUNDS );
 
-  if (isTutor === '1') {
+  if (isTutor === true) {
     const tutor = AppDataSource.getRepository(Tutor).create({
       userEmail: userEmail,
       userName: userName,
@@ -49,10 +49,10 @@ router.post('/signup', wrapAsync(async (req, res, next) => {
   
     await AppDataSource.getRepository(Tutor).save(tutor);
 
-    res.status(200).json({ msg : 'signup success!'});
+    res.status(200).json({ msg : 'signup success!' });
   } 
   
-  else if (isTutor === '0') {
+  else if (isTutor === false) {
     const tutee = AppDataSource.getRepository(Tutee).create({
       userEmail: userEmail,
       userName: userName,
@@ -70,9 +70,8 @@ router.post('/signup', wrapAsync(async (req, res, next) => {
 
     await AppDataSource.getRepository(Tutee).save(tutee);
 
-    res.status(200).json({ msg : 'signup success!'});
+    res.status(200).json({ msg : 'signup success!' });
   };
 }));
-
 
 export default router;

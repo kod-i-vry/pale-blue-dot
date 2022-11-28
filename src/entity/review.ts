@@ -7,16 +7,16 @@ export class Review {
   @PrimaryGeneratedColumn()
   public id: number;
 
-  @Column({ type: 'varchar', comment: 'review text' })
+  @Column({ type: 'varchar', comment: 'review text', nullable: true })
   text: string;
 
-  @Column({ type: 'varchar', comment: 'rate' })
+  @Column({ type: 'varchar', comment: 'rate', nullable: true })
   rate: string;
 
-  @CreateDateColumn({ type: 'timestamp', comment: 'createdAt' })
+  @CreateDateColumn({ type: 'timestamp', comment: 'createdAt', nullable: true })
   createdAt: Date;
 
-  @UpdateDateColumn({ type: 'timestamp', comment: 'updatedAt' })
+  @UpdateDateColumn({ type: 'timestamp', comment: 'updatedAt', nullable: true })
   updatedAt: Date;
 
   @ManyToOne(() => Tutor, (tutor) => tutor.reviews)

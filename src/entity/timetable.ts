@@ -7,16 +7,13 @@ export class TimeTable {
   @PrimaryGeneratedColumn()
   public id: number;
 
-  @Column({ type: 'int', comment: 'timeId' })
-  timeId: number;
-
-  @Column({ type: 'varchar', comment: 'start time', length: 45 })
+  @Column({ type: 'varchar', comment: 'start time', length: 45, nullable: true })
   start: string;
 
-  @Column({ type: 'varchar', comment: 'end time', length: 45 })
+  @Column({ type: 'varchar', comment: 'end time', length: 45, nullable: true })
   end: string;
 
-  @Column({ type: 'tinyint', comment: 'tutee notification' })
+  @Column({ type: 'tinyint', comment: 'tutee notification', nullable: true })
   tuteeNoti: number;
 
   @ManyToOne(() => Tutor, (tutor) => tutor.timeTables)

@@ -7,13 +7,10 @@ export class Like {
   @PrimaryGeneratedColumn()
   public id: number;
 
-  @Column({ type: 'int', comment: 'likeId' })
-  likeId: number;
-
-  @CreateDateColumn({ type: 'timestamp', comment: 'createdAt' })
+  @CreateDateColumn({ type: 'timestamp', comment: 'createdAt', nullable: true })
   createdAt: Date;
 
-  @UpdateDateColumn({ type: 'timestamp', comment: 'updatedAt' })
+  @UpdateDateColumn({ type: 'timestamp', comment: 'updatedAt', nullable: true })
   updatedAt: Date;
   
   @ManyToOne(() => Tutor, (tutor) => tutor.likes)
