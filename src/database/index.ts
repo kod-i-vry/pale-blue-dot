@@ -1,21 +1,55 @@
-import env from 'env-var';
-import { Tutee, Tutor, TimeTable, Like, Review } from '../entity';
 import { DataSource } from 'typeorm';
+import {
+  DB_HOST,
+  DB_NAME,
+  DB_USER,
+  DB_PORT,
+  DB_PASSWORD,
+} from '../common/environment';
+import * as entities from '../entities';
 
-const DB_PORT = env.get('DB_PORT').required().asInt();
-const DB_NAME = env.get('DB_NAME').required().asString();
-const DB_HOST = env.get('DB_HOST').required().asString();
-const DB_USER = env.get('DB_USER').required().asString();
-const DB_PASSWORD = env.get('DB_PASSWORD').required().asString();
+export let AppDataSource: DataSource;
 
-export const AppDataSource = new DataSource({
-  type: 'mysql',
-  host: DB_HOST,
-  port: DB_PORT,
-  username: DB_USER,
-  password: DB_PASSWORD,
-  database: DB_NAME,
-  synchronize: false,
-  logging: true,
-  entities: [Tutee, Tutor, TimeTable, Like, Review]
-});
+type DataSourceParameters = {
+  logging?: boolean;
+  synchronize?: boolean;
+};
+
+const getDataSource = ({
+  logging = false,
+  synchronize = false,
+}: DataSourceParameters) =>
+  new DataSource({
+    type: 'mysql',
+    host: DB_HOST,
+    port: DB_PORT,
+    username: DB_USER,
+    password: DB_PASSWORD,
+    database: DB_NAME,
+    entities: entities,
+    synchronize,
+    logging,
+  });
+
+export const dataSourceInit = async (
+  dataSourceParam?: DataSourceParameters
+) => {
+  AppDataSource = getDataSource(dataSourceParam || {});
+
+  await AppDataSource.initialize()
+    .then(() => {
+      console.log('db connected');
+    })
+    .catch((error) => {
+      console.error('db connect failed', error);
+      process.exit(1);
+    });
+};
+
+export const sync = async () => {
+  await dataSourceInit();
+
+  await AppDataSource.synchronize();
+
+  await AppDataSource.destroy();
+};

@@ -1,21 +1,13 @@
 import 'dotenv/config';
 import express from 'express';
-import { AppDataSource } from './database/index';
-import userController from './domain/user/controller'
+import { errorHandler } from './middleware/index';
+import cors from 'cors';
 
 const app = express();
 
-app.use(express.json());
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
-app.use(userController);
+app.use(express.json());
+app.use(errorHandler);
 
-app.listen(3000, () => {
-  return console.log('Express is listening at 3000 port');
-});
-
-AppDataSource.initialize().then(async () => {
-  console.log('db connect success');
-  }).catch(error => console.log(error))
-  
-
-  
+export default app;
