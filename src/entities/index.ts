@@ -1,2 +1,4 @@
-export { Tutor } from './tutor';
-export { Reservation } from './reservation';
+import { Tutor } from './tutor';
+import { Reservation } from './reservation';
+
+export { Tutor, Reservation };

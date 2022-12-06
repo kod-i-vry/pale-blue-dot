@@ -1,29 +1,36 @@
-import Joi from 'joi';
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
 
-import { CommonApiError, CommonError } from '../error/index';
-import { loggerUtils } from '../utils/index.mjs';
-import { Result } from '../common/index.mjs';
+import { CommonError, CommonApiError } from '../error/index';
 
-const { logger } = loggerUtils;
-const { ValidationError } = Joi;
-
-export default (e: any, req: Request, res: Response, next: NextFunction) => {
-  logger.error(e, { req, res });
-
-  const result = new Result(null, e, false);
-
-  if (e instanceof ValidationError) {
-    return res.status(400).json(result);
+export const errorHandler = (
+  err: any,
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  if (err instanceof CommonApiError) {
+    return res.status(400).send({
+      success: false,
+      err: {
+        message: err.getMessage(),
+        code: err.getCode(),
+        rawMsessage: err.getRawMessage(),
+        rawCode: err.getRawCode(),
+      },
+    });
   }
 
-  if (e instanceof CommonApiError) {
-    return res.status(400).json(result);
+  if (err instanceof CommonError) {
+    return res.status(400).send({
+      success: false,
+      err: {
+        code: err.getCode(),
+        message: err.getMessage(),
+      },
+    });
   }
 
-  if (e instanceof CommonError) {
-    return res.status(400).json(result);
-  }
-
-  return res.status(500).json(result);
+  return res.status(500).send({
+    err: { message: 'internal error', code: 'ERR-000' },
+  });
 };
