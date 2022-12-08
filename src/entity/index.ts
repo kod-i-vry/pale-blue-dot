@@ -1,5 +1,0 @@
-export { Tutee } from '../entity/tutee'
-export { Tutor } from '../entity/tutor'
-export { Like } from '../entity/like'
-export { TimeTable } from '../entity/timetable'
-export { Review } from '../entity/review'

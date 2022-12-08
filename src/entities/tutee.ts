@@ -1,9 +1,9 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
 import { BlueDotBaseEntity } from './blue-dot-base-entity';
 import { Reservation, Like, Review } from './index';
 
-@Entity()
-export class Tutor extends BlueDotBaseEntity {
+@Entity() 
+export class Tutee extends BlueDotBaseEntity {
   @PrimaryGeneratedColumn()
   id!: number;
 
@@ -67,12 +67,12 @@ export class Tutor extends BlueDotBaseEntity {
   @Column({ type: 'varchar', comment: 'main languages', length: 255 })
   language3?: string;
 
-  @OneToMany(() => Reservation, (reservation) => reservation.tutor)
+  @OneToMany(() => Reservation, (reservation) => reservation.tutee)
   public reservations: Reservation[];
 
-  @OneToMany(() => Like, (like) => like.tutor)
+  @OneToMany(() => Like, (like) => like.tutee)
   public likes: Like[];
 
-  @OneToMany(() => Review, (review) => review.tutor)
+  @OneToMany(() => Review, (review) => review.tutee)
   public reviews: Review[];
 }

@@ -1,17 +1,12 @@
 import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { BlueDotBaseEntity } from './blue-dot-base-entity';
 import { Tutor } from './tutor';
 import { Tutee } from './tutee';
 
 @Entity()
-export class Like {
+export class Like extends BlueDotBaseEntity{
   @PrimaryGeneratedColumn()
   public id: number;
-
-  @CreateDateColumn({ type: 'timestamp', comment: 'createdAt', nullable: true })
-  createdAt: Date;
-
-  @UpdateDateColumn({ type: 'timestamp', comment: 'updatedAt', nullable: true })
-  updatedAt: Date;
   
   @ManyToOne(() => Tutor, (tutor) => tutor.likes)
   public tutor: Tutor;

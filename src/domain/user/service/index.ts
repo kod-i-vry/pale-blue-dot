@@ -9,4 +9,4 @@
 
 //   if(!pwdValidation.test(pwd)) {
 //     throw new ValidationError({code: 'VALIDATION_FAILED', message: 'invalid password'});
-//   }3
+//   }

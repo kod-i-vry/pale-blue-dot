@@ -1,9 +1,10 @@
 import { Router } from 'express';
 
 import { AppDataSource } from '../../../database';
-import { Tutee, Tutor } from '../../../entity';
+import { Tutor, Tutee } from '../../../entities';
 import { compareHash, createHash, createAccessToken, wrapAsync } from '../../../util';
-import { ApiError, ValidationError } from '../../../error';
+import { CommonError, CommonApiError, ErrorFormat } from '../../../error';
+import { ApiError } from '../../../error/api-error';
 
 const SALT_ROUNDS = 10;
 
@@ -20,13 +21,13 @@ router.post('/signup', wrapAsync(async (req, res, next) => {
   });
 
   if(existUser) {
-    throw new ValidationError({code: 'VALIDATION_FAILED', message: 'userEmail already exist'});
+    throw new ApiError({code: 'VALIDATION_FAILED', message: 'userEmail already exist', statusCode: 400});
   };
 
   const pwdValidation = /^(?=.*[A-Za-z])(?=.*[0-9])[a-zA-Z0-9!-_]{8,20}$/;
 
   if(!pwdValidation.test(pwd)) {
-    throw new ValidationError({code: 'VALIDATION_FAILED', message: 'invalid password'});
+    throw new ApiError({code: 'VALIDATION_FAILED', message: 'invalid password', statusCode: 400});
   }
 
   const hashedPassword = await createHash( pwd, SALT_ROUNDS );
@@ -41,10 +42,10 @@ router.post('/signup', wrapAsync(async (req, res, next) => {
       language1: language1,
       language2: language2,
       language3: language3,
-      comment: comment,
+      oneLineComment: comment,
       contents: contents,
-      startTime: startTime,
-      endTime: endTime
+      classStartTime: startTime,
+      classEndTime: endTime
     });
   
     await AppDataSource.getRepository(Tutor).save(tutor);
@@ -62,10 +63,10 @@ router.post('/signup', wrapAsync(async (req, res, next) => {
       language1: language1,
       language2: language2,
       language3: language3,
-      comment: comment,
+      oneLineComment: comment,
       contents: contents,
-      startTime: startTime,
-      endTime: endTime
+      classStartTime: startTime,
+      classEndTime: endTime
     });
 
     await AppDataSource.getRepository(Tutee).save(tutee);

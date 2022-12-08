@@ -14,3 +14,4 @@ export class BlueDotBaseEntity extends BaseEntity {
   @UpdateDateColumn({ type: 'timestamp', comment: 'updatedAt' })
   public updatedAt?: Date;
 }
+

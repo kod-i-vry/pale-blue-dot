@@ -12,6 +12,7 @@
     "strict": true,
     "resolveJsonModule": true,
     "target": "ES2020",
-    "allowJs": true
+    "allowJs": true,
+    "strictPropertyInitialization": false
   }
 }
