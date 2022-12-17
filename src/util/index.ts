@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs';
 import env from 'env-var';
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 import { sign } from 'jsonwebtoken';
-import { LogicalError } from '../error';
+import { LogicalError } from '../error/logical-error';
 
 const JWT_KEY = env.get('JWT_KEY').required().asString();
 

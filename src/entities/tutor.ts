@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, PrimaryColumn, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { BlueDotBaseEntity } from './blue-dot-base-entity';
 import { Reservation, Like, Review } from './index';
 

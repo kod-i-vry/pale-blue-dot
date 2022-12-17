@@ -9,8 +9,8 @@ import { ApiError } from '../../../error/api-error';
 const SALT_ROUNDS = 10;
 
 const router = Router();
-
-//signup
+      
+//signup router
 router.post('/signup', wrapAsync(async (req, res, next) => {
   const {userEmail, userName, pwd, isTutor, tag, language1, language2, language3, comment, contents, startTime, endTime} = req.body;
 
@@ -74,5 +74,10 @@ router.post('/signup', wrapAsync(async (req, res, next) => {
     res.status(200).json({ msg : 'signup success!' });
   };
 }));
+
+//login router
+router.post('/login', wrapAsync(async (req, res, next) => {
+  const { userEmail, pwd } =req.body;
+}))
 
 export default router;
