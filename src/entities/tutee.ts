@@ -1,10 +1,11 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import { BlueDotBaseEntity } from './blue-dot-base-entity';
+import { Reservation } from './reservation';
 
 @Entity()
-export class Tutor extends BlueDotBaseEntity {
-  @PrimaryGeneratedColumn()
-  id!: number;
+export class Tutee extends BlueDotBaseEntity {
+  @PrimaryColumn({ generated: 'uuid' })
+  id!: string;
 
   @Column({ type: 'varchar', comment: 'userName', length: 20 })
   userName!: string;
@@ -65,4 +66,7 @@ export class Tutor extends BlueDotBaseEntity {
 
   @Column({ type: 'varchar', comment: 'main languages', length: 255 })
   language3?: string;
+
+  @OneToMany(() => Reservation, (reservation) => reservation.tutee)
+  reservations?: Reservation[];
 }
